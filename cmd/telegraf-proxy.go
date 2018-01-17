@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/iyacontrol/telegraf-proxy/api"
 	"github.com/iyacontrol/telegraf-proxy/config"
 	"github.com/iyacontrol/telegraf-proxy/discovery"
 )
@@ -24,6 +25,9 @@ func main() {
 
 	// init discovery
 	discovery.InitDiscovery(registry, stop)
+
+	// init api
+	api.InitAPI()
 
 	<-stop
 	log.Println("Stopped.")
