@@ -4,10 +4,11 @@ import (
 	"net"
 
 	"github.com/iyacontrol/telegraf-proxy/config"
+	"github.com/iyacontrol/telegraf-proxy/discovery"
 	baa "gopkg.in/baa.v1"
 )
 
-func InitAPI() {
+func InitAPI(stop chan struct{}, reg *discovery.Registry) {
 
 	go func() {
 		app := baa.New()

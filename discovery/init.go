@@ -8,7 +8,7 @@ import (
 	"github.com/iyacontrol/telegraf-proxy/config"
 )
 
-func InitDiscovery(stop chan bool, reg *Registry) {
+func InitDiscovery(stop chan struct{}, reg *Registry) {
 
 	wec := &WrappedEtcdClient{
 		etcdClient: etcd.NewClient(config.Cfg.Etcd.Endpoints),

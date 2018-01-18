@@ -11,7 +11,7 @@ type WrappedEtcdClient struct {
 	etcdClient *etcd.Client
 }
 
-func (w *WrappedEtcdClient) WatchEtcd(dir string, ch chan *etcd.Response, stop chan bool, handle func(*etcd.Response)) {
+func (w *WrappedEtcdClient) WatchEtcd(dir string, ch chan *etcd.Response, stop chan struct{}, handle func(*etcd.Response)) {
 
 	watcher := func() {
 		for {
@@ -28,7 +28,7 @@ func (w *WrappedEtcdClient) WatchEtcd(dir string, ch chan *etcd.Response, stop c
 							time.Sleep(5 * time.Second)
 						}
 					case <-stop:
-						break
+						return
 					default:
 						time.Sleep(time.Second)
 					}
@@ -46,12 +46,16 @@ func (w *WrappedEtcdClient) WatchEtcd(dir string, ch chan *etcd.Response, stop c
 
 	receiver := func() {
 		for {
-			res := <-ch
-			if res != nil {
-				handle(res)
+			select {
+			case res := <-ch:
+				if res != nil {
+					handle(res)
+				}
+			case <-stop:
+				return
 			}
+
 		}
-		stop <- true
 	}
 
 	log.Printf("Watching %s.", dir)
