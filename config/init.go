@@ -11,7 +11,7 @@ func InitConfig(fConfig string) {
 		fConfig = "telegtaf-proxy.toml"
 	}
 	if _, err := toml.DecodeFile(fConfig, &Cfg); err != nil {
-		log.Fatalf("配置文件错误:%s\n", err)
+		log.Fatalf("config err:%s\n", err)
 	}
 
 }

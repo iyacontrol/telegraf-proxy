@@ -5,8 +5,9 @@ var Cfg Config
 
 // Config defines config for telegraf-proxy
 type Config struct {
-	Etcd *Etcd
-	HTTP *HTTP
+	Etcd      *Etcd
+	HTTP      *HTTP
+	Aggregate *Aggregate
 }
 
 // Etcd defines etcd config
@@ -19,4 +20,9 @@ type Etcd struct {
 type HTTP struct {
 	Address string
 	Port    string
+}
+
+// Aggregate metrcis aggregate
+type Aggregate struct {
+	TimeOut int 
 }

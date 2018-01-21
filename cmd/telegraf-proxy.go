@@ -47,12 +47,13 @@ func main() {
 	config.InitConfig(*fConfig)
 
 	stop := make(chan struct{})
+	signals := make(chan os.Signal)
 
 	// init discovery
 	discovery.InitDiscovery(stop, registry)
 
 	// init api
-	api.InitAPI(stop, registry)
+	api.InitAPI(registry)
 
 	// wait for signals to stop or reload
 	signal.Notify(signals, os.Interrupt, syscall.SIGHUP)
