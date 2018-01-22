@@ -27,3 +27,14 @@ func (r *Registry) Unregister(node *etcd.Node) {
 	}
 	r.Unlock()
 }
+
+func (r *Registry) Translate(path string) []string {
+	var targets []string
+	r.Lock()
+	for _, v := range r.data {
+		targets = append(targets, v+"/"+path)
+	}
+
+	r.Unlock()
+	return targets
+}

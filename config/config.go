@@ -24,5 +24,5 @@ type HTTP struct {
 
 // Aggregate metrcis aggregate
 type Aggregate struct {
-	TimeOut int 
+	Timeout int
 }

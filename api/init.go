@@ -11,7 +11,7 @@ import (
 	"github.com/iyacontrol/telegraf-proxy/discovery"
 )
 
-func InitApi(reg *discovery.Register) {
+func InitApi(reg *discovery.Registry) {
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
 
