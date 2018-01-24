@@ -1,0 +1,18 @@
+package: github.com/iyacontrol/telegraf-proxy
+import:
+- package: github.com/BurntSushi/toml
+- package: github.com/coreos/etcd
+  subpackages:
+  - client
+- package: github.com/go-chi/chi
+  subpackages:
+  - middleware
+- package: github.com/prometheus/client_model
+  subpackages:
+  - go
+- package: github.com/prometheus/common
+  subpackages:
+  - expfmt
+- package: golang.org/x/net
+  subpackages:
+  - context

@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	dir := "ump/telegraf/"
+	dir = "ump/telegraf/"
 )
 
 

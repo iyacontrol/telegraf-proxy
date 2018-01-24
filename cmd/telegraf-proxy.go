@@ -9,6 +9,7 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/iyacontrol/telegraf-proxy/api"
 	"github.com/iyacontrol/telegraf-proxy/config"
 	"github.com/iyacontrol/telegraf-proxy/discovery"
 )
@@ -58,7 +59,7 @@ func main() {
 	center = discovery.NewCenter(endpoints)
 
 	// init api
-	// api.InitAPI(registry)
+	api.InitAPI(center)
 
 	// wait for signals to stop or reload
 	signal.Notify(signals, os.Interrupt, syscall.SIGHUP)

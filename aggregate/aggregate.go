@@ -27,7 +27,7 @@ type Result struct {
 func (a *Aggregator) Aggregate(reg *discovery.Center, output io.Writer) {
 	resultChan := make(chan *Result, 10)
 
-	targets := Center.Translate(":9273/metrics")
+	targets := reg.Translate(":9273/metrics")
 
 	for _, target := range targets {
 		go a.fetch(target, resultChan)
