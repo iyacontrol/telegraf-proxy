@@ -24,10 +24,10 @@ type Result struct {
 	Error        error
 }
 
-func (a *Aggregator) Aggregate(reg *discovery.Registery, output io.Writer) {
-	resultChan := make(chan *Result, 100)
+func (a *Aggregator) Aggregate(reg *discovery.Center, output io.Writer) {
+	resultChan := make(chan *Result, 10)
 
-	targets := reg.Translate(":9273/metrics")
+	targets := Center.Translate(":9273/metrics")
 
 	for _, target := range targets {
 		go a.fetch(target, resultChan)

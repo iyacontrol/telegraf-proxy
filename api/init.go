@@ -1,34 +1,41 @@
-package api
+// package api
 
-import (
-	"log"
-	"net"
-	"net/http"
+// import (
+// 	"log"
+// 	"net"
+// 	"net/http"
+// 	"time"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/iyacontrol/telegraf-proxy/config"
-	"github.com/iyacontrol/telegraf-proxy/discovery"
-)
+// 	"github.com/go-chi/chi"
+// 	"github.com/go-chi/chi/middleware"
+// 	"github.com/iyacontrol/telegraf-proxy/aggregate"
+// 	"github.com/iyacontrol/telegraf-proxy/config"
+// 	"github.com/iyacontrol/telegraf-proxy/discovery"
+// )
 
-func InitApi(reg *discovery.Registry) {
-	r := chi.NewRouter()
-	r.Use(middleware.Recoverer)
+// func InitApi(reg *discovery.Center) {
+// 	r := chi.NewRouter()
+// 	r.Use(middleware.Recoverer)
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("welcome telegraf-proxy"))
-	})
+// 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+// 		w.Write([]byte("welcome telegraf-proxy"))
+// 	})
 
-	addr := net.JoinHostPort("", config.Cfg.HTTP.Port)
-	srv := &http.Server{
-		Addr:    addr,
-		Handler: r,
-	}
+// 	aggregator := &aggregate.Aggregator{HTTP: &http.Client{Timeout: time.Duration(config.Cfg.Aggregate.Timeout) * time.Millisecond}}
+// 	r.Get("/metrics", func(w http.ResponseWriter, r *http.Request) {
+// 		aggregator.Aggregate(reg, w)
+// 	})
 
-	go func() {
-		if err := srv.ListenAndServe(); err != nil {
-			// cannot panic, because this probably is an intentional close
-			log.Printf("Httpserver: ListenAndServe() error: %s", err)
-		}
-	}()
-}
+// 	addr := net.JoinHostPort("", config.Cfg.HTTP.Port)
+// 	srv := &http.Server{
+// 		Addr:    addr,
+// 		Handler: r,
+// 	}
+
+// 	go func() {
+// 		if err := srv.ListenAndServe(); err != nil {
+// 			// cannot panic, because this probably is an intentional close
+// 			log.Printf("Httpserver: ListenAndServe() error: %s", err)
+// 		}
+// 	}()
+// }

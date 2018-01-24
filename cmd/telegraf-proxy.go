@@ -6,21 +6,24 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
-	"github.com/iyacontrol/telegraf-proxy/api"
 	"github.com/iyacontrol/telegraf-proxy/config"
 	"github.com/iyacontrol/telegraf-proxy/discovery"
 )
 
-var fConfig = flag.String("config", "", "configuration file to load")
+var (
+	fConfig = flag.String("config", "", "configuration file to load")
+	etcd    = flag.String("etcd", "http://127.0.0.1:2379", "etcd url")
+)
 
 var (
 	nextVersion = "1.5.0"
 	version     string
 	commit      string
 	branch      string
-	registry    *discovery.Registry
+	center      *discovery.Center
 )
 
 func displayVersion() string {
@@ -50,10 +53,12 @@ func main() {
 	signals := make(chan os.Signal)
 
 	// init discovery
-	discovery.InitDiscovery(stop, registry)
+
+	endpoints := strings.Split(*etcd, ",")
+	center = discovery.NewCenter(endpoints)
 
 	// init api
-	api.InitAPI(registry)
+	// api.InitAPI(registry)
 
 	// wait for signals to stop or reload
 	signal.Notify(signals, os.Interrupt, syscall.SIGHUP)
@@ -76,10 +81,4 @@ func main() {
 
 	<-stop
 	log.Printf("I! Stop Telegraf-proxy %s\n", displayVersion())
-}
-
-func init() {
-	registry := &discovery.Registry{
-		data: make(map[string]string),
-	}
 }
