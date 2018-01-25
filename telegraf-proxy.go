@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 
 	"github.com/iyacontrol/telegraf-proxy/api"
@@ -16,7 +15,6 @@ import (
 
 var (
 	fConfig = flag.String("config", "", "configuration file to load")
-	etcd    = flag.String("etcd", "http://127.0.0.1:2379", "etcd url")
 )
 
 var (
@@ -54,9 +52,7 @@ func main() {
 	signals := make(chan os.Signal)
 
 	// init discovery
-
-	endpoints := strings.Split(*etcd, ",")
-	center = discovery.NewCenter(endpoints)
+	center = discovery.NewCenter(config.Cfg.Etcd.Endpoints)
 
 	// init api
 	api.InitAPI(center)

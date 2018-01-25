@@ -8,3 +8,8 @@
 # aggregate
 [aggregate]
  time_out = "5"
+
+# etcd
+[etcd]
+ dir = "ump/telegraf/"
+ endpoints = ["http://127.0.0.1:2379"]

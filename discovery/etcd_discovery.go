@@ -6,13 +6,11 @@ import (
 	"time"
 
 	"github.com/coreos/etcd/client"
+	"github.com/iyacontrol/telegraf-proxy/config"
 	"golang.org/x/net/context"
 )
 
-const (
-	dir = "ump/telegraf/"
-)
-
+// Center registry center
 type Center struct {
 	members map[string]*Member
 	KeysAPI client.KeysAPI
@@ -25,12 +23,13 @@ type Member struct {
 	Name    string
 }
 
-// workerInfo is the service register information to etcd
+// WorkerInfo is the service register information to etcd
 type WorkerInfo struct {
 	Name string
 	IP   string
 }
 
+// NewCenter ...
 func NewCenter(endpoints []string) *Center {
 	cfg := client.Config{
 		Endpoints:               endpoints,
@@ -77,7 +76,7 @@ func NodeToWorkerInfo(node *client.Node) *WorkerInfo {
 
 func (m *Center) WatchWorkers() {
 	api := m.KeysAPI
-	watcher := api.Watcher(dir, &client.WatcherOptions{
+	watcher := api.Watcher(config.Cfg.Etcd.Dir, &client.WatcherOptions{
 		Recursive: true,
 	})
 	for {
