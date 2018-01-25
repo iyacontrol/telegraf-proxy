@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/iyacontrol/telegraf-proxy/aggregate"
+	"github.com/iyacontrol/telegraf-proxy/api/handlers"
 	"github.com/iyacontrol/telegraf-proxy/config"
 	"github.com/iyacontrol/telegraf-proxy/discovery"
 )
@@ -25,6 +26,8 @@ func InitAPI(reg *discovery.Center) {
 	r.Get("/metrics", func(w http.ResponseWriter, r *http.Request) {
 		aggregator.Aggregate(reg, w)
 	})
+
+	r.Post("/reload", handlers.Reload)
 
 	addr := net.JoinHostPort("", config.Cfg.HTTP.Port)
 	srv := &http.Server{

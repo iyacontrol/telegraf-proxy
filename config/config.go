@@ -8,6 +8,7 @@ type Config struct {
 	Etcd      *Etcd
 	HTTP      *HTTP
 	Aggregate *Aggregate
+	Center    *SettingCenter
 }
 
 // Etcd defines etcd config
@@ -25,4 +26,9 @@ type HTTP struct {
 // Aggregate metrcis aggregate
 type Aggregate struct {
 	Timeout int
+}
+
+// SettingCenter  config center
+type SettingCenter struct {
+	URL string
 }
