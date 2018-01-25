@@ -13,7 +13,6 @@ const (
 	dir = "ump/telegraf/"
 )
 
-
 type Center struct {
 	members map[string]*Member
 	KeysAPI client.KeysAPI
@@ -111,11 +110,10 @@ func (m *Center) WatchWorkers() {
 	}
 }
 
-
 func (m *Center) Translate(path string) []string {
-	var  urls []string
+	var urls []string
 	for _, v := range m.members {
-		urls = append(urls, v.IP + path)
+		urls = append(urls, "http://"+v.IP+path)
 	}
 
 	return urls

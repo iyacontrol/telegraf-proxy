@@ -8,7 +8,7 @@ import (
 
 func InitConfig(fConfig string) {
 	if fConfig == "" {
-		fConfig = "telegtaf-proxy.toml"
+		fConfig = "telegraf-proxy.toml"
 	}
 	if _, err := toml.DecodeFile(fConfig, &Cfg); err != nil {
 		log.Fatalf("config err:%s\n", err)
