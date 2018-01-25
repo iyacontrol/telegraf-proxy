@@ -30,5 +30,6 @@ type Aggregate struct {
 
 // SettingCenter  config center
 type SettingCenter struct {
-	URL string
+	// telegraf.conf path
+	Path string
 }
